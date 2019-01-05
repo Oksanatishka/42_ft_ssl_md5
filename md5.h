@@ -19,6 +19,22 @@
 # include <unistd.h>
 # include "libft/header/libft.h"
 
+/*
+** uint32_t is a numeric type that guarantees 32 bits, the value is unsigned, 
+** meaning that the range of values goes from 0 to 232 - 1.
+**
+** uint8_t		unsigned char
+** uint16_t		unsigned short
+** uint32_t		unsigned int
+** uint64_t		unsigned long long
+**
+**
+** h0-h7 - These vars will contain the hash
+** a-w   - temporary numbers
+** f_p, f_q, f_r, f_s - flags
+** tmp1-tmp6 - related to sha
+*/
+
 typedef struct		s_gen
 {
 	int				new_len;
