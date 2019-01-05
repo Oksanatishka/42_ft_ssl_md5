@@ -1,0 +1,239 @@
+ft_ssl_md5 - recreating md5, sha256 and sha 224 algorithms
+
+* Basic functions:
+1) md5, sha256
+
+* Flags:
+1) -s, -q, -r -p
+
+* Bonus:
+1) sha224
+
+## Installation
+$> make
+$> ./ft_ssl_md5 {hash_function} {flag} {file}
+$> works with stdin too:
+$> 1)./ft_ssl_md5 {hash_function} 
+$> 2) Hit Enter, enter text, ctrl + d to output
+
+Resources:
+- Cryptographic hash function https://en.wikipedia.org/wiki/Cryptographic_hash_function
+- md5 http://www.iusmentis.com/technology/hashfunctions/md5/
+- https://en.wikipedia.org/wiki/MD5
+- https://en.wikipedia.org/wiki/SHA-2
+- MD5 RFC https://tools.ietf.org/html/rfc1321.html
+- SHA256 RFC https://tools.ietf.org/html/rfc6234
+- sha algorithms https://csrc.nist.gov/csrc/media/publications/fips/180/4/final/documents/fips180-4-draft-aug2014.pdf
+- pdf with intermediate values of registers after first transformation for SHA256 / SHA224 algorithms. Good for checking.  
+    http://www.iwar.org.uk/comsec/resources/cipher/sha256-384-512.pdf
+- https://medium.com/dtechlog/%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B-%D1%85%D1%8D%D1%88-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8F-sha-256-9862302f942f
+- OpenSSL Command Cheatsheet https://medium.freecodecamp.org/openssl-command-cheatsheet-b441be1e8c4a
+
+Other Resources:
+1. uint8_t, uint16_t, uint32_t and uint64_t 
+    https://www.badprog.com/c-type-what-are-uint8-t-uint16-t-uint32-t-and-uint64-t
+2. Simple MD5 implementation https://gist.github.com/creationix/4710780 
+3. MD5 - With Example https://ru.scribd.com/doc/35954574/MD5-With-Example
+4. 
+https://github.com/fsasm
+https://github.com/fsasm/asm-hash
+https://github.com/fsasm/asm-hash/wiki/MD5-Intermediate-values
+https://github.com/fsasm/asm-hash/wiki
+5. 
+
+------------------------- Cryptographic hash algorithms: -------------------------
+1) MD5 (Message-Digest algorithm 5) - the most common hash algorithm
+2) SHA-1 (Secure Hash Algorithm)    - the most common hash algorithm
+3) RIPEMD-160
+4) Whirlpool
+5) SHA-2
+6) SHA-3
+7) BLAKE2
+
+A cryptographic hash function
+It is a mathematical algorithm
+that maps data of arbitrary size to a bit string of a fixed size. It is designed to also be
+a one-way function, that is, a function which is infeasible [невыполнимый] to invert. The only way to
+recreate the input data from an ideal cryptographic hash function’s output is to attempt a
+brute-force search of possible inputs to see if they produce a match, or use a rainbow table
+of matched hashes. The input data is often called the message, and the output (the
+hash value or hash) is often called the message digest or simply the digest.
+
+input: message --> output(hash / hash value): message digest / digest
+
+The ideal cryptographic hash function has five main properties:
+1. it is deterministic, so the same message always results in the same hash
+2. it is quick to compute [вычисление] the hash value for any given message
+3. it is infeasible to generate a message from its digest except by trying all possible
+messages
+4. a small change to a message should change the hash value so extensively that the
+new hash value appears uncorrelated with the old hash value
+5. it is infeasible to find two different messages with the same hash value
+
+OpenSSL is a cryptographic toolkit library written C that is used to secure communications
+over computer networks. It implements the Secure Sockets Layer (SSL) and
+Transport Layer Security (TLS) network protocols to protect against eavesdropping [подслушивание]
+and verify identities during network communication.
+
+SSL
+SSL (англ. Secure Sockets Layer — уровень защищённых cокетов) — криптографический протокол, который подразумевает 
+более безопасную связь. Он использует асимметричную криптографию для аутентификации ключей обмена, симметричное 
+шифрование для сохранения конфиденциальности, коды аутентификации сообщений для целостности сообщений. 
+Протокол широко использовался для обмена мгновенными сообщениями и передачи голоса через IP (англ. Voice over IP — VoIP) 
+в таких приложениях, как электронная почта, интернет-факс и др.
+
+$ openssl help
+??? man openssl
+$ man md5
+$ man sha256 (will not work on the macs. You can use 'shasum' for testing.)
+
+$ echo "pickle rick" | openssl md5
+$ echo "pickle rick" | md5
+$ echo "pickle rick" | ./ft_ssl md5
+
+$ echo "Do not pity the dead, Harry." | ./ft_ssl md5 -p
+$ echo "Pity the living." | ./ft_ssl md5 -q -r
+$ echo "And above all," > file
+$ ./ft_ssl md5 file
+$ ./ft_ssl md5 -r file
+$ ./ft_ssl md5 -s "pity those that aren't following baerista on spotify."
+$ echo "be sure to handle edge cases carefully" | ./ft_ssl md5 -p file
+$ echo "some of this will not make sense at first" | ./ft_ssl md5 file
+
+------------------------- MD5 (32 символа)-------------------------
+FLAGS:
+• -p, echo STDIN to STDOUT and append the checksum to STDOUT
+        Input: ./ft_ssl md5 -p
+• -q, quiet mode (only the checksum is printed out.  Overrides the -r option)
+        Input: ./ft_ssl md5 -q -s 'oks'
+        Output: 8d2cc35e70deca8505ee61f089a46ec4
+• -r, reverse the format of the output.
+        Input: ./ft_ssl md5 -r -s 'oks'
+        Output: MD5 ("oks") = 8d2cc35e70deca8505ee61f089a46ec4 "oks"
+• -s, print the sum of the given string
+        Input: ./ft_ssl md5 -s 'oks'
+        Output: MD5 ("oks") = 8d2cc35e70deca8505ee61f089a46ec4
+
+The MD5 message-digest algorithm is a widely used hash function producing a 128-bit hash value. 
+
+MD5 (англ. Message Digest 5) — 128-битный алгоритм хеширования, разработанный профессором 
+Рональдом Л. Ривестом из MIT в 1991 году. Предназначен для создания «отпечатков» или дайджестов 
+сообщения произвольной длины и последующей проверки их подлинности. Широко применялся для проверки 
+целостности информации и хранения хешей паролей.
+
+Описан этот алгоритм в RFC 1321 - https://tools.ietf.org/html/rfc1321 
+
+Алгоритм MD5
+Шаг 1. Выравнивание потока              (Step 1. Append Padding Bits)
+Шаг 2. Добавление длины сообщения       (Step 2. Append Length)
+Шаг 3. Инициализация буфера             (Step 3. Initialize MD Buffer)
+Шаг 4. Вычисление в цикле               (Step 4. Process Message in 16-Word Blocks)
+Шаг 5. Результат вычислений             (Step 5. Output)
+
+Примеры MD5-хешей
+Хеш содержит 128 бит (16 байт) и обычно представляется как последовательность из 32 шестнадцатеричных цифр.
+Несколько примеров хеша:
+    MD5("md5") = 1BC29B36F623BA82AAF6724FD3B16718
+Пример MD5-хеша для «нулевой» строки:
+    MD5("") = D41D8CD98F00B204E9800998ECF8427E
+
+На данный момент существуют несколько видов «взлома» хешей MD5 — подбора сообщения с заданным хешем:
+- Перебор по словарю
+- Brute-force
+- RainbowCrack https://ru.wikipedia.org/wiki/RainbowCrack 
+- Коллизия хеш-функции
+    коллизии — это получение одинаковых хэшей для разных исходных строк.
+
+------------------------- SHA-224 (56 символа) -------------------------
+------------------------- SHA-256 (64 символа) -------------------------
+FLAGS: 
+• -p, echo STDIN to STDOUT and append the checksum to STDOUT
+• -q, quiet mode
+• -r, reverse the format of the output.
+• -s, print the sum of the given string
+
+SHA-256 представляет собой однонаправленную функцию для создания цифровых отпечатков фиксированной длины (256 бит, 32 байт) 
+из входных данных размером до 2,31 эксабайт (2⁶⁴ бит) и является частным случаем алгоритма из семейства криптографических 
+алгоритмов SHA-2 (Secure Hash Algorithm Version 2) опубликованным АНБ США в 2002 году.
+
+
+----------------------------------------------------------------------------------------------------
+handle the errors:
+
+1) *** Bus errors
+Bus errors are rare nowadays on x86 and occur when your processor cannot even attempt the memory access 
+requested, typically:
+- using a processor instruction with an address that does not satisfy its alignment requirements.
+
+2) *** Segmentation faults
+Segmentation faults occur when accessing memory which does not belong to your process, they are very 
+common and are typically the result of:
+- using a pointer to something that was deallocated.
+- using an uninitialized hence bogus pointer.
+- using a null pointer.
+- overflowing a buffer.
+
+PS: To be more precise this is not manipulating the pointer itself that will cause issues, 
+it's accessing the memory it points to (dereferencing).
+
+3) *** double free
+A double free in C, technically speaking, leads to undefined behavior. This means that the program can 
+behave completely arbitrarily and all bets are off about what happens. That's certainly a bad thing to 
+have happen! In practice, double-freeing a block of memory will corrupt the state of the memory manager, 
+which might cause existing blocks of memory to get corrupted or for future allocations to fail in bizarre 
+ways (for example, the same memory getting handed out on two different successive calls of malloc).
+
+Double frees can happen in all sorts of cases. A fairly common one is when multiple different objects all 
+have pointers to one another and start getting cleaned up by calls to free. When this happens, if you aren't 
+careful, you might free the same pointer multiple times when cleaning up the objects.
+
+---------------------------------
+$ echo "oks" | openssl md5
+$ echo "oks" | md5
+$ echo "oks" | ./ft_ssl md5
+$ echo "oks" | ./ft_ssl md5 -p
+$ echo "oks" | ./ft_ssl md5 -q -r
+
+$ echo "okss" > file
+$ ./ft_ssl md5 file
+$ ./ft_ssl md5 -r file
+$ ./ft_ssl md5 -s "oks"
+$ echo "oks" | ./ft_ssl md5 -p file
+$ echo "oks" | ./ft_ssl md5 file
+$ echo "oks" | ./ft_ssl md5 -p -r file
+$ echo "oks" | ./ft_ssl md5 -p -s "foo" file
+$ echo "okss" | ./ft_ssl md5 -r -p -s "foo" file -s "bar"
+$ echo "oksss" | ./ft_ssl md5 -r -q -p -s "foo" file
+
+$ echo "https://www.youtube.com/watch?v=w-5yAtMtrSM" > big_smoke_order_remix
+$ ./ft_ssl sha256 -q big_smoke_order_remix
+$ openssl sha -sha256 big_smoke_order_remix
+$ ./ft_ssl sha256 -s "oks"
+
+$ shasum -a 256 file
+$ shasum -a 224 file
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Разбор задания
+
+argc == 1 
+
+--> ft_bonus_ssl --> пишет ft_ssl в терминал --> 
+
+** strcmp      if Return value = 0 then it indicates str1 is equal to str2.
+
+(ft_strcmp(red, "md5") == 0)
+здесь мы сравниваем то что было введено(red - это в ф-и fake_gnl) с нашими значениями ("md5" / "sha256" / "sha224" / "quit") 
+
+--> в завимимости от того что совпало переходим в ф-ю go_md5 / go_sha256 (--> print_sha256) / go_sha224 (--> print_sha224).
+
+** add0 используется чтобы напечатать первый ноль перед hex строкой (например 0xff0000).\
+
+---------------------------------
+argv[1] == "md5" / "sha256" / "sha224"
+
+--> md5_sha f-n --> parse_entre f-n (распарсить флаги p/q/r/s) --> go_md5 / go_sha256 / go_sha224 
+если флаг -s то рассматриваем случаи: 
+    - no_ro_s           добавляем 'MD5 ("oks") ='
+    - или rotate_s      добавляем 'MD5 ("oks") =' + в конце строку(g->pars)
