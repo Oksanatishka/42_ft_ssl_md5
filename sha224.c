@@ -12,11 +12,16 @@
 
 #include "md5.h"
 
+/*
+** SHA-224 is identical to SHA-256, except that:
+** 1) the initial hash values h0 through h7 are different, and
+** 2) the output is constructed by omitting h7.
+*/
+
 void	error(char *red)
 {
 	ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\nStandard\
-	commands:\n\nMessage Digest commands:\nmd5\nsha256\nsha224\n\n\
-	Cipher commands:\n", red);
+	commands:\n\nMessage Digest commands:\nmd5\nsha256\nsha224\n", red);
 }
 
 const uint32_t g_k3[] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
@@ -31,6 +36,10 @@ const uint32_t g_k3[] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f,
 	0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
+
+/*
+** 1) the initial hash values h0 through h7 are different
+*/
 
 int		sha224_prepross(char *init_mg, size_t len, t_gen *g)
 {

@@ -12,6 +12,19 @@
 
 #include "md5.h"
 
+/*
+** go_md5 f-n contains 4 parts of hash value
+**
+** unsigned_itoa_base - Converts an integer value to a null-terminated string
+** using the specified base:
+** 10 means decimal base;
+** 16 hexadecimal;
+** 8 octal;
+** 2 binary.
+**
+** add0 - to add zero at the beginning of hex string(containing of 8 chars).
+*/
+
 void		go_md5(char *std, t_gen *g)
 {
 	char	*tmp;

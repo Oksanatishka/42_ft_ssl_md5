@@ -12,6 +12,10 @@
 
 #include "md5.h"
 
+/*
+** interactive mode (without arguments)
+*/
+
 void		ft_bonus_ssl(t_gen *g, int confirm, char *red)
 {
 	while (confirm == 0)
@@ -75,6 +79,10 @@ void		file_rotat(t_gen *g, char **argv)
 	g->pars++;
 }
 
+/*
+** without interactive mode (with arguments)
+*/
+
 void		md5_sha(t_gen *g, char **argv, int argc)
 {
 	pars_entre(g, argc, argv);
@@ -100,6 +108,11 @@ void		md5_sha(t_gen *g, char **argv, int argc)
 		file_rotat(g, argv);
 }
 
+/*
+** first argc == 1	- to enter interactive mode (without arguments)
+** next  argc == 1	- to fix Segmentation fault: 11 error
+*/
+
 int			main(int argc, char **argv)
 {
 	t_gen	g;
@@ -114,8 +127,7 @@ int			main(int argc, char **argv)
 	else
 	{
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\nStandard \
-commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher \
-commands:\n", argv[1]);
+commands:\n\nMessage Digest commands:\nmd5\nsha256\n", argv[1]);
 	}
 	return (0);
 }

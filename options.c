@@ -12,6 +12,10 @@
 
 #include "md5.h"
 
+/*
+** to parse flags -p/-q/-r/-s
+*/
+
 void		pars_entre(t_gen *g, int argc, char **argv)
 {
 	g->i = 2;
@@ -39,6 +43,10 @@ void		pars_entre(t_gen *g, int argc, char **argv)
 	g->nb_file = g->i - argc;
 }
 
+/*
+** will add MD5 ("oks") =
+*/
+
 void		no_ro_s(t_gen *g, char **argv)
 {
 	if (!g->f_q)
@@ -60,6 +68,11 @@ void		no_ro_s(t_gen *g, char **argv)
 		go_md5(argv[g->pars], g);
 	ft_putchar('\n');
 }
+
+/*
+** if we use -r flag with -s flag
+** will add g->pars string to the end
+*/
 
 void		rotate_s(t_gen *g, char **argv)
 {
@@ -102,6 +115,10 @@ int			print_s(t_gen *g, char **argv, int argc)
 	g->pars++;
 	return (0);
 }
+
+/*
+** if incorrect path to file was entered.
+*/
 
 int			no_such_file(t_gen *g, char **argv)
 {

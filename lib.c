@@ -12,6 +12,10 @@
 
 #include "md5.h"
 
+/*
+** used in go_md5/go_sha256/go_sha224
+*/
+
 char		*add0(char *str)
 {
 	int i;
@@ -25,11 +29,19 @@ char		*add0(char *str)
 	return (str);
 }
 
+/*
+** used in go_md5/go_sha256/go_sha224
+*/
+
 uint32_t	revers_uint32(uint32_t n)
 {
 	return ((n >> 24) | ((n & 0xff0000) >> 8) |
 		((n & 0xff00) << 8) | (n << 24));
 }
+
+/*
+** not used
+*/
 
 uint64_t	revers_uint64(uint64_t n)
 {
@@ -42,6 +54,10 @@ uint64_t	revers_uint64(uint64_t n)
 			| (n & 0x000000000000ff00) << 40 \
 			| (n & 0x00000000000000ff) << 56);
 }
+
+/*
+** used in main.c
+*/
 
 void		fake_gnl(char **ptr)
 {
@@ -66,6 +82,10 @@ void		fake_gnl(char **ptr)
 	}
 	ptr[0] = str;
 }
+
+/*
+** used in main.c
+*/
 
 void		fake_gnl_all(char **ptr, int fd)
 {

@@ -12,6 +12,10 @@
 
 #include "md5.h"
 
+/*
+** It's used in md5_sha --> file_rotat f-n.
+*/
+
 void	extra(t_gen *g, char **argv)
 {
 	if (ft_strcmp(argv[1], "sha256") == 0)

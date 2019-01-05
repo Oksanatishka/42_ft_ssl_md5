@@ -10,12 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Pseudocode: https://en.wikipedia.org/wiki/MD5
+*/
+
 #include "md5.h"
+
+/*
+** g_r specifies the per-round shift amounts
+*/
 
 const uint32_t g_r[] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
 	22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 4, 11, 16,
 	23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15,
 	21, 6, 10, 15, 21, 6, 10, 15, 21};
+
+/*
+** precomputed table
+** (Use binary integer part of the sines of integers (Radians) as constants).
+*/
 
 const uint32_t g_k[] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
@@ -35,10 +48,19 @@ const uint32_t g_k[] = {
 	0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
+/*
+** Function to left rotate x by c bits.
+** https://www.geeksforgeeks.org/rotate-bits-of-an-integer/
+*/
+
 uint32_t	leftrotate(uint32_t x, uint32_t c)
 {
 	return (((x) << (c)) | ((x) >> (32 - (c))));
 }
+
+/*
+** Be wary of the below definitions of a,b,c,d
+*/
 
 void		md5_compress(t_gen *g, int i)
 {
@@ -69,6 +91,12 @@ void		md5_compress(t_gen *g, int i)
 	g->a = g->tmp;
 }
 
+/*
+** Initialize variables: A(h0), B(h1), C(h2), D(h3)
+** Pre-processing: adding a single 1 bit
+** Pre-processing: padding with zeros
+*/
+
 int			prepross(unsigned char *init_mg, size_t len, t_gen *g)
 {
 	g->h0 = 0x67452301;
@@ -87,6 +115,14 @@ int			prepross(unsigned char *init_mg, size_t len, t_gen *g)
 	g->offset = 0;
 	return (0);
 }
+
+/*
+** error handler
+** Process the message in successive 512-bit chunks:
+** Initialize hash value for this chunk:
+** Main loop:
+** Add this chunk's hash to result so far:
+*/
 
 int			md5(unsigned char *init_mg, size_t len, t_gen *g)
 {
